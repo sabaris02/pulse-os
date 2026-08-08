@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'layout/app_shell.dart';
 
 import '../features/dashboard/dashboard_screen.dart';
 import 'theme/app_theme.dart';
@@ -12,7 +13,7 @@ class PulseApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Pulse OS',
       theme: AppTheme.darkTheme,
-      home: const DashboardScreen(),
+      home: const AppShell(),
     );
   }
 }
