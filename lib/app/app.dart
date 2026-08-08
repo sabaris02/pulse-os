@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'layout/app_shell.dart';
-
-import '../features/dashboard/dashboard_screen.dart';
+import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 
 class PulseApp extends StatelessWidget {
@@ -9,11 +7,11 @@ class PulseApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Pulse OS',
       theme: AppTheme.darkTheme,
-      home: const AppShell(),
+      routerConfig: appRouter,
     );
   }
 }

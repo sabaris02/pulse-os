@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-
-import '../../features/dashboard/dashboard_screen.dart';
 import 'sidebar.dart';
 
 class DesktopShell extends StatelessWidget {
-  const DesktopShell({super.key});
+  final Widget child;
+  final String currentPath;
+
+  const DesktopShell({
+    super.key,
+    required this.child,
+    required this.currentPath,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Row(
         children: [
-          Sidebar(),
-          Expanded(
-            child: DashboardScreen(),
-          ),
+          Sidebar(currentPath: currentPath),
+          Expanded(child: child),
         ],
       ),
     );

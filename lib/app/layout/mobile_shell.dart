@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../features/dashboard/dashboard_screen.dart';
-
 class MobileShell extends StatelessWidget {
-  const MobileShell({super.key});
+  final Widget child;
+  final String currentPath;
+
+  const MobileShell({
+    super.key,
+    required this.child,
+    required this.currentPath,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const DashboardScreen();
+    return Scaffold(body: child);
   }
 }
