@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/planner_provider.dart';
+import 'widgets/add_task_dialog.dart';
 import 'widgets/task_tile.dart';
 
 class PlannerScreen extends ConsumerWidget {
@@ -13,6 +14,16 @@ class PlannerScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xff111111),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFFF5A5F),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => const AddTaskDialog(),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(36),
         child: Column(
@@ -47,4 +58,4 @@ class PlannerScreen extends ConsumerWidget {
       ),
     );
   }
-} 
+}
