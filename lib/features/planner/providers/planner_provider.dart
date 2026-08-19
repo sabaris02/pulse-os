@@ -1,16 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../models/task_model.dart';
+import '../services/planner_service.dart';
 
 class PlannerNotifier extends StateNotifier<List<TaskModel>> {
-  PlannerNotifier() : super([]);
+  final PlannerService _service = PlannerService();
+
+  PlannerNotifier() : super([]) {
+    state = _service.loadTasks();
+  }
 
   void addTask(TaskModel task) {
     state = [...state, task];
+    _service.saveTasks(state);
   }
 
   void removeTask(String id) {
     state = state.where((task) => task.id != id).toList();
+    _service.saveTasks(state);
   }
 
   void toggleTask(String id) {
@@ -22,6 +28,7 @@ class PlannerNotifier extends StateNotifier<List<TaskModel>> {
       }
       return task;
     }).toList();
+    _service.saveTasks(state);
   }
 
   void updateTask(TaskModel updatedTask) {
@@ -31,10 +38,12 @@ class PlannerNotifier extends StateNotifier<List<TaskModel>> {
       }
       return task;
     }).toList();
+    _service.saveTasks(state);
   }
 
   void clearTasks() {
     state = [];
+    _service.saveTasks(state);
   }
 }
 
