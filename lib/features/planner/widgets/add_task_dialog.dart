@@ -6,7 +6,9 @@ import '../models/task_model.dart';
 import '../providers/planner_provider.dart';
 
 class AddTaskDialog extends ConsumerStatefulWidget {
-  const AddTaskDialog({super.key});
+  final DateTime date;
+
+  const AddTaskDialog({super.key, required this.date});
 
   @override
   ConsumerState<AddTaskDialog> createState() => _AddTaskDialogState();
@@ -32,7 +34,7 @@ class _AddTaskDialogState extends ConsumerState<AddTaskDialog> {
       id: const Uuid().v4(),
       title: _titleController.text.trim(),
       description: _descriptionController.text.trim(),
-      date: DateTime.now(),
+      date: widget.date,
       category: _category,
       priority: _priority,
     );

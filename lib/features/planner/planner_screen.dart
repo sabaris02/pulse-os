@@ -3,14 +3,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/planner_provider.dart';
 import 'widgets/add_task_dialog.dart';
+import 'widgets/calendar_strip.dart';
 import 'widgets/task_tile.dart';
 
-class PlannerScreen extends ConsumerWidget {
+class PlannerScreen extends ConsumerStatefulWidget {
   const PlannerScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final tasks = ref.watch(plannerProvider);
+  ConsumerState<PlannerScreen> createState() => _PlannerScreenState();
+}
+
+class _PlannerScreenState extends ConsumerState<PlannerScreen> {
+  DateTime _selectedDate = DateTime.now();
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final allTasks = ref.watch(plannerProvider);
+    final tasks = allTasks
+        .where((task) => _isSameDay(task.date, _selectedDate))
+        .toList();
 
     return Scaffold(
       backgroundColor: const Color(0xff111111),
@@ -19,7 +34,7 @@ class PlannerScreen extends ConsumerWidget {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => const AddTaskDialog(),
+            builder: (context) => AddTaskDialog(date: _selectedDate),
           );
         },
         child: const Icon(Icons.add),
@@ -37,12 +52,19 @@ class PlannerScreen extends ConsumerWidget {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 24),
+            CalendarStrip(
+              selectedDate: _selectedDate,
+              onDateSelected: (date) {
+                setState(() => _selectedDate = date);
+              },
+            ),
+            const SizedBox(height: 24),
             Expanded(
               child: tasks.isEmpty
                   ? const Center(
                       child: Text(
-                        "No tasks yet",
+                        "No tasks for this day",
                         style: TextStyle(color: Colors.white54, fontSize: 16),
                       ),
                     )
